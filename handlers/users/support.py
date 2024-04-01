@@ -28,8 +28,8 @@ async def ask_support(message: types.Message):
 async def send_to_support(call: types.CallbackQuery, state: FSMContext, callback_data: dict):
     await call.answer()
     user_id = int(callback_data.get("user_id"))
-    await call.message.answer("Xabar kiriting va yuboring"
-                              "<b>\nAks xolda bo'lsa /Bekor_qilish bosing</b>")
+    await call.message.answer("Xabar kiriting va yuboring."
+                              "<b>\nAks xolda bo'lsa /Bekor_qilish ni bosing.</b>")
     await state.set_state("wait_for_support_message")
     await state.update_data(second_id=user_id, )
     await state.update_data(mention=call.from_user.get_mention(as_html=True))
@@ -41,10 +41,12 @@ async def get_support_message(message: types.Message, state: FSMContext):
     second_id = data.get("second_id")
     if message.from_user.id == 742648323:
         await bot.send_message(second_id,
-                               f"<b>Dadabayev Sardorbek Usmanovich</b> sizga xabar yubordi! Quyidagi tugmani bosish orqali xabarga javob berishingiz mumkin.")
+                               f"<b>Dadabayev Sardorbek Usmanovich</b> sizga xabar yubordi! "
+                               f"Quyidagi tugmani bosish orqali xabarga javob berishingiz mumkin.")
     else:
         await bot.send_message(second_id,
-                               f"{mention} sizga xabar yubordi! Quyidagi tugmani bosish orqali xabarga javob berishingiz mumkin.")
+                               f"{mention} sizga xabar yubordi! "
+                               f"Quyidagi tugmani bosish orqali xabarga javob berishingiz mumkin.")
     keyboard = await support_keyboard(messages="one", user_id=message.from_user.id)
     await message.copy_to(second_id, reply_markup=keyboard)
     await message.answer("Sizning xabaringiz yuborildi!")
